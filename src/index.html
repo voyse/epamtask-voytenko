@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product table</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class='main-container'>
+
+    </div>
+    <div class='modal-container'>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/lodash/4.10.0/lodash.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <script id="table-template" type="text/html">
+        <button class="btn btn-primary add-edit add-input add" name="add" value="0">Add new
+        </button>
+        <form class="search-form">
+            <input type="text" class="form-control search-input" name="search-input">
+            <button type="submit" class="btn btn-success search-submit" name="search-submit" >Search
+            </button>
+        </form>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name
+                        <button class="sort-arrow sort-arrow_up name-sort-up none"><span class="fas fa-arrow-up"></span></button>
+                        <button class="sort-arrow sort-arrow_down name-sort-down"><span class="fas fa-arrow-down"></span></button>
+                    </th>
+                    <td>Price
+                        <button class="sort-arrow sort-arrow_up price-sort-up none" ><span class="fas fa-arrow-up"></span></button>
+                        <button class="sort-arrow sort-arrow_down price-sort-down" ><span class="fas fa-arrow-down"></span></button>
+                    </td>
+                    <td>Actions</td>
+                </tr>
+            </thead>
+            <tbody class="table-content-container">
+               
+            </tbody>
+        </table>
+    </script>
+
+    <script id="table-content-template" type="text/html">
+            <tr class="table-item-<%-product.id%>">
+                <td><a href="" class="add-edit" data-id=<%-product.id%>><%-product.name%></a>
+                    <span class="badge badge-dark badge-count" title="Count of product"><%-product.count%></span></td>
+                <td><%=toDollars(product.price)%></td>
+                <td>
+                    <button class="btn btn-primary add-edit" value=<%-product.id%> >Edit</button>
+                    <button class="btn btn-danger delete-btn" value=<%-product.id%> >Delete</button>
+                </td>
+            </tr>
+    </script>
+
+    <script id="delete-modal-template" type="text/html">
+        <div class="overlay">
+        </div>
+        <div class='modal-delete'>
+            
+            <header class="modal-delete__header">Are you sure?<button class='modal-button_close close-btn'>X</button></header>
+            <div class="modal-delete__content">
+                Are you sure you perform this action?
+                <button class="btn btn-success delete-yes" value=<%-id%>>Yes</button> 
+                <button class="btn btn-danger close-btn">No</button>
+            </div>
+        </div>
+    </script>
+    <script id="edit-modal-template" type="text/html">
+        <div class="overlay">
+            </div>
+            <div class='modal-edit'>
+                <button class='modal-button_close close-btn'>X</button>
+                <form class="form-edit"> 
+                        <input type="hidden" name="id" class="id" value=<%-product.id%>>
+                    <div class="form-group">
+                        <label for="name">Name: </label>    
+                        <input type="text" class="form-control name" name="name" id="name" value="<%-product.name%>">
+                        <span class="error-name error"></span>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="count">Count: </label>
+                        <input type="text" class="form-control count" name="count" id="count" value=<%-product.count%>>
+                        <span class="error-count error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price: </label>
+                        <input type="text" class="form-control price" name="price" id="price" value=<%=toDollars(product.price)%>>
+                        <span class="error-price error"></span>
+                    </div>                    
+                    <button class="btn btn-primary add-or-edit">Add/Update</button>
+                </form>
+            </div>
+    </script>    
+    
+    <script id="error-box-template" type="text/html">
+        <div class="alert alert-danger errorBox" role="alert">
+            <h4 class="alert-heading">Error on server.</h4>  
+            <p> Operation cant be finished because something happend with server. sorry.<p>
+            <button class="btn btn-dark close-btn">Ok</button>
+        </div>
+    </script>
+
+    <script src="../dist/bundle.js"></script>
+ 
+</body>
+
+</html>
